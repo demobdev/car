@@ -30,7 +30,7 @@ import {
 export function useExport() {
   const { state, dispatch, effectiveTheme, mapRef } = usePosterContext();
   const { form } = state;
-  const hasVisibleMarkers = state.markers.length > 0;
+  const hasVisibleMarkers = form.showMarkers && state.markers.length > 0;
 
   const exportPoster = useCallback(
     async (format: "png" | "pdf") => {
@@ -83,6 +83,7 @@ export function useExport() {
           displayCountry: form.displayCountry || "",
           fontFamily: form.fontFamily.trim(),
           showPosterText: form.showPosterText,
+          showOverlay: form.showMarkers,
           includeCredits: form.includeCredits,
           markers: hasVisibleMarkers ? state.markers : [],
           markerIcons: hasVisibleMarkers

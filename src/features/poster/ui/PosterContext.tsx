@@ -69,7 +69,13 @@ export const DEFAULT_FORM: PosterForm = {
   includeBuildings: false,
   includeWater: true,
   includeParks: true,
-  showMarkers: false,
+  includeAeroway: true,
+  includeRail: true,
+  includeRoads: true,
+  includeRoadPath: true,
+  includeRoadMinorLow: true,
+  includeRoadOutline: true,
+  showMarkers: true,
 };
 
 const INITIAL_STATE: PosterState = {
@@ -181,6 +187,12 @@ export function PosterProvider({ children }: { children: ReactNode }) {
         includeBuildings: state.form.includeBuildings,
         includeWater: state.form.includeWater,
         includeParks: state.form.includeParks,
+        includeAeroway: state.form.includeAeroway,
+        includeRail: state.form.includeRail,
+        includeRoads: state.form.includeRoads,
+        includeRoadPath: state.form.includeRoadPath,
+        includeRoadMinorLow: state.form.includeRoadMinorLow,
+        includeRoadOutline: state.form.includeRoadOutline,
         distanceMeters: Number(state.form.distance),
       }),
     [
@@ -188,6 +200,12 @@ export function PosterProvider({ children }: { children: ReactNode }) {
       state.form.includeBuildings,
       state.form.includeWater,
       state.form.includeParks,
+      state.form.includeAeroway,
+      state.form.includeRail,
+      state.form.includeRoads,
+      state.form.includeRoadPath,
+      state.form.includeRoadMinorLow,
+      state.form.includeRoadOutline,
       state.form.distance,
     ],
   );

@@ -50,7 +50,7 @@ const DEFAULT_LOCATION_LABEL =
 export default function PreviewPanel() {
   const { state, dispatch, effectiveTheme, mapStyle, mapRef } = usePosterContext();
   const { form, selectedLocation, userLocation } = state;
-  const hasVisibleMarkers = state.markers.length > 0;
+  const hasVisibleMarkers = form.showMarkers && state.markers.length > 0;
   const isMarkerEditorActive = state.isMarkerEditorActive;
   const {
     mapCenter,
@@ -323,7 +323,7 @@ export default function PreviewPanel() {
             onMove={handleMove}
             onMoveEnd={handleMoveEnd}
           />
-          <GradientFades color={effectiveTheme.ui.bg} />
+          {form.showMarkers ? <GradientFades color={effectiveTheme.ui.bg} /> : null}
           {hasVisibleMarkers ? (
             <MarkerOverlay
               markers={state.markers}
@@ -340,8 +340,10 @@ export default function PreviewPanel() {
             lon={formLon}
             fontFamily={form.fontFamily}
             textColor={effectiveTheme.ui.text}
+            landColor={effectiveTheme.map.land}
             showPosterText={form.showPosterText}
             includeCredits={form.includeCredits}
+            showOverlay={form.showMarkers}
           />
         </div>
       </div>

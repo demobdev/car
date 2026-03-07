@@ -32,6 +32,12 @@ export interface PosterForm {
   includeBuildings: boolean;
   includeWater: boolean;
   includeParks: boolean;
+  includeAeroway: boolean;
+  includeRail: boolean;
+  includeRoads: boolean;
+  includeRoadPath: boolean;
+  includeRoadMinorLow: boolean;
+  includeRoadOutline: boolean;
   showMarkers: boolean;
 }
 
