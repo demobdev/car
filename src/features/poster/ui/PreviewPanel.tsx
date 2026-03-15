@@ -215,8 +215,13 @@ export default function PreviewPanel() {
   const formLon = Number(form.longitude) || 0;
   const layoutOption =
     getLayoutOption(form.layout) ?? createCustomLayoutOption(widthCm, heightCm);
-  const posterSizeLabel = `${widthCm} x ${heightCm} cm`;
+  const posterSizeLabel = formatLayoutDimensions(layoutOption);
   const layoutLabel = `${layoutOption.name} (${formatLayoutDimensions(layoutOption)})`;
+  const infoLocationLabel =
+    [form.displayCity, form.displayCountry].filter(Boolean).join(", ") ||
+    form.location ||
+    DEFAULT_LOCATION_LABEL;
+  const infoLayoutLabel = layoutOption.name;
   const markerCount = state.markers.length;
   const markersLabel = `${markerCount} marker${markerCount === 1 ? "" : "s"}`;
   const coordinatesLabel = `${formLat.toFixed(4)}, ${formLon.toFixed(4)}`;
@@ -660,9 +665,9 @@ export default function PreviewPanel() {
       </div>
 
       <SettingsInfo
-        location={form.location || DEFAULT_LOCATION_LABEL}
+        location={infoLocationLabel}
         theme={effectiveTheme.name}
-        layout={layoutLabel}
+        layout={infoLayoutLabel}
         posterSize={posterSizeLabel}
         markers={markersLabel}
         coordinates={coordinatesLabel}
