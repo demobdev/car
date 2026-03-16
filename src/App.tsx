@@ -11,6 +11,7 @@ import MobileNavBar, { type MobileTab } from "@/shared/ui/MobileNavBar";
 import DesktopExportFab from "@/features/export/ui/DesktopExportFab";
 import MobileExportFab from "@/features/export/ui/MobileExportFab";
 import DesktopLocationBar from "@/shared/ui/DesktopLocationBar";
+import StartupLocationModal from "@/features/location/ui/StartupLocationModal";
 import { useSwipeDown } from "@/shared/hooks/useSwipeDown";
 
 function SettingsDrawer({
@@ -96,6 +97,7 @@ function AppShell() {
       data-desktop-tab={desktopTab}
     >
       <GeneralHeader onAboutOpen={() => setAboutOpen(true)} />
+      <StartupLocationModal />
 
       <DesktopNavBar
         activeTab={desktopTab}
