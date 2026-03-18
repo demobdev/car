@@ -1,19 +1,24 @@
-import { useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { AppProviders } from "@/core/AppProviders";
 import GeneralHeader from "@/shared/ui/GeneralHeader";
 import DesktopNavBar from "@/shared/ui/DesktopNavBar";
-import AboutModal from "@/shared/ui/AboutModal";
 import FooterNote from "@/shared/ui/FooterNote";
-import SettingsPanel from "@/features/poster/ui/SettingsPanel";
 import PreviewPanel from "@/features/poster/ui/PreviewPanel";
-import AnnouncementModal from "@/features/updates/ui/AnnouncementModal";
 import MobileNavBar, { type MobileTab } from "@/shared/ui/MobileNavBar";
-import DesktopExportFab from "@/features/export/ui/DesktopExportFab";
-import MobileExportFab from "@/features/export/ui/MobileExportFab";
-import DesktopLocationBar from "@/shared/ui/DesktopLocationBar";
-import StartupLocationModal from "@/features/location/ui/StartupLocationModal";
 import InstallPrompt from "@/features/install/ui/InstallPrompt";
 import { useSwipeDown } from "@/shared/hooks/useSwipeDown";
+
+const AboutModal = lazy(() => import("@/shared/ui/AboutModal"));
+const SettingsPanel = lazy(() => import("@/features/poster/ui/SettingsPanel"));
+const AnnouncementModal = lazy(
+  () => import("@/features/updates/ui/AnnouncementModal"),
+);
+const DesktopExportFab = lazy(() => import("@/features/export/ui/DesktopExportFab"));
+const MobileExportFab = lazy(() => import("@/features/export/ui/MobileExportFab"));
+const DesktopLocationBar = lazy(() => import("@/shared/ui/DesktopLocationBar"));
+const StartupLocationModal = lazy(
+  () => import("@/features/location/ui/StartupLocationModal"),
+);
 
 function SettingsDrawer({
   mobileTab,
@@ -66,6 +71,24 @@ function AppShell() {
   const [desktopLocationRowVisible, setDesktopLocationRowVisible] =
     useState(true);
   const [aboutOpen, setAboutOpen] = useState(false);
+  useEffect(() => {
+    const preload = () => {
+      void import("@/features/poster/ui/SettingsPanel");
+      void import("@/shared/ui/DesktopLocationBar");
+      void import("@/features/export/ui/DesktopExportFab");
+      void import("@/features/export/ui/MobileExportFab");
+      void import("@/features/updates/ui/AnnouncementModal");
+      void import("@/features/location/ui/StartupLocationModal");
+    };
+
+    if ("requestIdleCallback" in window) {
+      const idleId = window.requestIdleCallback(preload, { timeout: 2000 });
+      return () => window.cancelIdleCallback(idleId);
+    }
+
+    const timer = window.setTimeout(preload, 300);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   const handleMobileTabChange = (tab: MobileTab) => {
     if (tab === "location") {
@@ -99,7 +122,9 @@ function AppShell() {
     >
       <GeneralHeader onAboutOpen={() => setAboutOpen(true)} />
       <InstallPrompt />
-      <StartupLocationModal />
+      <Suspense fallback={null}>
+        <StartupLocationModal />
+      </Suspense>
 
       <DesktopNavBar
         activeTab={desktopTab}
@@ -114,20 +139,26 @@ function AppShell() {
       <div
         className={`desktop-location-row-wrap${desktopLocationRowVisible ? "" : " is-hidden"}`}
       >
-        <DesktopLocationBar />
+        <Suspense fallback={null}>
+          <DesktopLocationBar />
+        </Suspense>
       </div>
 
       <div
         className={`mobile-location-row-wrap${mobileLocationRowVisible ? "" : " is-hidden"}`}
       >
-        <DesktopLocationBar />
+        <Suspense fallback={null}>
+          <DesktopLocationBar />
+        </Suspense>
       </div>
 
       <div className="desktop-left-panel">
         <div
           className={`desktop-settings-slide${desktopPanelOpen ? " is-open" : ""}`}
         >
-          <SettingsPanel />
+          <Suspense fallback={null}>
+            <SettingsPanel />
+          </Suspense>
         </div>
       </div>
 
@@ -146,13 +177,23 @@ function AppShell() {
         isLocationVisible={mobileLocationRowVisible}
         onTabChange={handleMobileTabChange}
       />
-      <MobileExportFab />
+      <Suspense fallback={null}>
+        <MobileExportFab />
+      </Suspense>
 
       <FooterNote />
-      <AnnouncementModal />
+      <Suspense fallback={null}>
+        <AnnouncementModal />
+      </Suspense>
 
-      <DesktopExportFab />
-      {aboutOpen ? <AboutModal onClose={() => setAboutOpen(false)} /> : null}
+      <Suspense fallback={null}>
+        <DesktopExportFab />
+      </Suspense>
+      {aboutOpen ? (
+        <Suspense fallback={null}>
+          <AboutModal onClose={() => setAboutOpen(false)} />
+        </Suspense>
+      ) : null}
     </div>
   );
 }
