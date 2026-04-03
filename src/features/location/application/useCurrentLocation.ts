@@ -30,12 +30,14 @@ export function useCurrentLocation(
 
     setIsLocatingUser(true);
     void (async () => {
+      // requestCurrentPositionWithRetry never throws — it always returns a result.
+      // Checking ok outside the try block lets TypeScript narrow the discriminated union.
       const positionResult = await requestCurrentPositionWithRetry({
         timeoutMs: GEOLOCATION_TIMEOUT_MS,
         maxAttempts: 2,
       });
 
-      if (!positionResult.ok) {
+      if ("reason" in positionResult) {
         setLocationPermissionMessage(
           getGeolocationFailureMessage(positionResult.reason),
         );
@@ -46,50 +48,53 @@ export function useCurrentLocation(
 
       const { lat, lon } = positionResult;
       setLocationPermissionMessage("");
-      flyToLocation(lat, lon);
-      dispatch({
-        type: "SET_FORM_FIELDS",
-        resetDisplayNameOverrides: true,
-        fields: {
-          latitude: lat.toFixed(6),
-          longitude: lon.toFixed(6),
-          distance: String(DEFAULT_DISTANCE_METERS),
-        },
-      });
 
       try {
-        const resolved = await reverseGeocodeCoordinates(lat, lon);
+        flyToLocation(lat, lon);
         dispatch({
           type: "SET_FORM_FIELDS",
           resetDisplayNameOverrides: true,
           fields: {
-            location: resolved.label,
-            displayCity: String(resolved.city ?? "").trim(),
-            displayCountry: String(resolved.country ?? "").trim(),
-            displayContinent: String(resolved.continent ?? "").trim(),
+            latitude: lat.toFixed(6),
+            longitude: lon.toFixed(6),
+            distance: String(DEFAULT_DISTANCE_METERS),
           },
         });
-        dispatch({ type: "SET_USER_LOCATION", location: resolved });
-      } catch {
-        const fallback: SearchResult = {
-          id: `user:${lat.toFixed(6)},${lon.toFixed(6)}`,
-          label: `${lat.toFixed(6)}, ${lon.toFixed(6)}`,
-          city: "",
-          country: "",
-          continent: "",
-          lat,
-          lon,
-        };
-        dispatch({
-          type: "SET_FORM_FIELDS",
-          resetDisplayNameOverrides: true,
-          fields: { location: fallback.label },
-        });
-        dispatch({ type: "SET_USER_LOCATION", location: fallback });
-      }
 
-      isLocatingRef.current = false;
-      setIsLocatingUser(false);
+        try {
+          const resolved = await reverseGeocodeCoordinates(lat, lon);
+          dispatch({
+            type: "SET_FORM_FIELDS",
+            resetDisplayNameOverrides: true,
+            fields: {
+              location: resolved.label,
+              displayCity: String(resolved.city ?? "").trim(),
+              displayCountry: String(resolved.country ?? "").trim(),
+              displayContinent: String(resolved.continent ?? "").trim(),
+            },
+          });
+          dispatch({ type: "SET_USER_LOCATION", location: resolved });
+        } catch {
+          const fallback: SearchResult = {
+            id: `user:${lat.toFixed(6)},${lon.toFixed(6)}`,
+            label: `${lat.toFixed(6)}, ${lon.toFixed(6)}`,
+            city: "",
+            country: "",
+            continent: "",
+            lat,
+            lon,
+          };
+          dispatch({
+            type: "SET_FORM_FIELDS",
+            resetDisplayNameOverrides: true,
+            fields: { location: fallback.label },
+          });
+          dispatch({ type: "SET_USER_LOCATION", location: fallback });
+        }
+      } finally {
+        isLocatingRef.current = false;
+        setIsLocatingUser(false);
+      }
     })();
   }, [flyToLocation, dispatch]);
 

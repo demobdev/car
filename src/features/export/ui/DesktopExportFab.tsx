@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useExport } from "@/features/export/application/useExport";
+import type { ExportFormat } from "@/features/export/domain/types";
 import { DownloadIcon, LoaderIcon } from "@/shared/ui/Icons";
 import SupportModal from "@/features/export/ui/SupportModal";
 
@@ -12,13 +13,13 @@ export default function DesktopExportFab() {
     supportPrompt,
     dismissSupportPrompt,
   } = useExport();
-  const [activeFormat, setActiveFormat] = useState<"png" | "pdf" | "svg" | null>(null);
+  const [activeFormat, setActiveFormat] = useState<ExportFormat | null>(null);
 
   useEffect(() => {
     if (!isExporting) setActiveFormat(null);
   }, [isExporting]);
 
-  const isLoading = (fmt: "png" | "pdf" | "svg") =>
+  const isLoading = (fmt: ExportFormat) =>
     isExporting && activeFormat === fmt;
 
   return (

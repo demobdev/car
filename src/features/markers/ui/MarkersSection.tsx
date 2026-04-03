@@ -486,7 +486,9 @@ export default function MarkersSection() {
                     onChange={(event) => {
                       const nextValue = Number(event.target.value);
                       if (Number.isFinite(nextValue)) {
-                        applyMarkerDefaults({ size: nextValue });
+                        applyMarkerDefaults({
+                          size: Math.max(MIN_MARKER_SIZE, Math.min(MAX_MARKER_SIZE, nextValue)),
+                        });
                       }
                     }}
                   />
@@ -771,7 +773,9 @@ export default function MarkersSection() {
                                             onChange={(event) => {
                                               const nextValue = Number(event.target.value);
                                               if (Number.isFinite(nextValue)) {
-                                                updateMarker(marker.id, { size: nextValue });
+                                                updateMarker(marker.id, {
+                                                  size: Math.max(MIN_MARKER_SIZE, Math.min(MAX_MARKER_SIZE, nextValue)),
+                                                });
                                               }
                                             }}
                                           />
