@@ -5,19 +5,19 @@ import { CloseIcon, DownloadIcon, LoaderIcon } from "@/shared/ui/Icons";
 import SupportModal from "@/features/export/ui/SupportModal";
 import SocialLinkGroup from "@/shared/ui/SocialLinkGroup";
 
+const FORMAT_OPTIONS: { format: ExportFormat; label: string }[] = [
+  { format: "png", label: "PNG" },
+  { format: "pdf", label: "PDF" },
+  { format: "svg", label: "RSVG" },
+];
+
 interface ExportFabProps {
   isMobile: boolean;
 }
 
 export default function ExportFab({ isMobile }: ExportFabProps) {
-  const {
-    isExporting,
-    handleDownloadPng,
-    handleDownloadPdf,
-    handleDownloadSvg,
-    supportPrompt,
-    dismissSupportPrompt,
-  } = useExport();
+  const { isExporting, exportPoster, supportPrompt, dismissSupportPrompt } =
+    useExport();
   const [isOpen, setIsOpen] = useState(false);
   const [activeFormat, setActiveFormat] = useState<ExportFormat | null>(null);
   const [isTriggerVisible, setIsTriggerVisible] = useState(true);
@@ -53,19 +53,8 @@ export default function ExportFab({ isMobile }: ExportFabProps) {
 
   const runExport = (format: ExportFormat) => {
     setActiveFormat(format);
-    if (format === "png") {
-      void handleDownloadPng();
-      return;
-    }
-    if (format === "pdf") {
-      void handleDownloadPdf();
-      return;
-    }
-    void handleDownloadSvg();
+    void exportPoster(format);
   };
-
-  const isLoading = (format: ExportFormat) =>
-    isExporting && activeFormat === format;
 
   const triggerClass = isMobile
     ? `mobile-export-fab-trigger${isTriggerVisible ? "" : " is-hidden"}`
@@ -111,45 +100,22 @@ export default function ExportFab({ isMobile }: ExportFabProps) {
               </button>
             </div>
             <div className="export-modal-actions">
-              <button
-                type="button"
-                className="export-modal-option export-modal-option--png"
-                onClick={() => runExport("png")}
-                disabled={isExporting}
-              >
-                {isLoading("png") ? (
-                  <LoaderIcon className="export-modal-option-icon is-spinning" />
-                ) : (
-                  <DownloadIcon className="export-modal-option-icon" />
-                )}
-                <span>PNG</span>
-              </button>
-              <button
-                type="button"
-                className="export-modal-option export-modal-option--pdf"
-                onClick={() => runExport("pdf")}
-                disabled={isExporting}
-              >
-                {isLoading("pdf") ? (
-                  <LoaderIcon className="export-modal-option-icon is-spinning" />
-                ) : (
-                  <DownloadIcon className="export-modal-option-icon" />
-                )}
-                <span>PDF</span>
-              </button>
-              <button
-                type="button"
-                className="export-modal-option export-modal-option--svg"
-                onClick={() => runExport("svg")}
-                disabled={isExporting}
-              >
-                {isLoading("svg") ? (
-                  <LoaderIcon className="export-modal-option-icon is-spinning" />
-                ) : (
-                  <DownloadIcon className="export-modal-option-icon" />
-                )}
-                <span>SVG</span>
-              </button>
+              {FORMAT_OPTIONS.map(({ format, label }) => (
+                <button
+                  key={format}
+                  type="button"
+                  className={`export-modal-option export-modal-option--${format}`}
+                  onClick={() => runExport(format)}
+                  disabled={isExporting}
+                >
+                  {isExporting && activeFormat === format ? (
+                    <LoaderIcon className="export-modal-option-icon is-spinning" />
+                  ) : (
+                    <DownloadIcon className="export-modal-option-icon" />
+                  )}
+                  <span>{label}</span>
+                </button>
+              ))}
             </div>
             <p className="export-modal-support-label">
               Support the project <span className="heart">❤︎</span>

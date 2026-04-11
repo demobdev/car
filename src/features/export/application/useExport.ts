@@ -216,6 +216,7 @@ export function useExport() {
 
   return {
     isExporting: state.isExporting,
+    exportPoster,
     handleDownloadPng,
     handleDownloadPdf,
     handleDownloadSvg,
