@@ -99,6 +99,7 @@ const INITIAL_STATE: PosterState = {
     city: false,
     country: false,
   },
+  hasSeenStartupModal: false,
 };
 
 /* ────── Context shapes ────── */

@@ -53,6 +53,7 @@ export default function StartupLocationModal({
     setIsClosing(true);
     window.setTimeout(() => {
       setIsOpen(false);
+      dispatch({ type: "COMPLETE_STARTUP" });
       onComplete?.();
     }, CLOSE_ANIMATION_MS);
   };
@@ -226,8 +227,8 @@ export default function StartupLocationModal({
       aria-labelledby="startup-location-title"
     >
       <div className="startup-location-logo-wrap" aria-hidden="true">
-        <img className="startup-location-logo" src="/assets/logo.svg" alt="" />
-        <p className="startup-location-app-name">Terraink</p>
+        <img className="startup-location-logo" src="/assets/cartographica-logo.png" alt="" />
+        <p className="startup-location-app-name">Cartographica</p>
       </div>
 
       <div className="startup-location-card is-visible">

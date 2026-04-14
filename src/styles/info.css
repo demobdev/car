@@ -20,7 +20,7 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-size: 0.78rem;
-  color: #88b7d5;
+  color: #7ab88e;
 }
 
 .swatch-row {
@@ -43,7 +43,7 @@
   font-size: 0.83rem;
   line-height: 1.45;
   opacity: 0.9;
-  color: #c5d9e8;
+  color: #c5ddd0;
 }
 
 .inspector-card p + p,
@@ -65,8 +65,8 @@
   padding: 7px 10px;
   border-radius: 999px;
   border: 1px solid var(--border);
-  background: rgba(9, 18, 27, 0.9);
-  color: #d5e8f7;
+  background: rgba(10, 22, 16, 0.9);
+  color: #d5efdf;
   text-decoration: none;
   font-size: 0.78rem;
   font-weight: 600;
@@ -79,9 +79,9 @@
 
 .github-badge:hover,
 .github-badge:focus-visible {
-  border-color: rgba(120, 179, 214, 0.75);
-  background: rgba(20, 39, 54, 0.95);
-  color: #ecf8ff;
+  border-color: rgba(106, 176, 136, 0.75);
+  background: rgba(20, 44, 32, 0.95);
+  color: #e8fff0;
 }
 
 .stars-badge {
@@ -115,8 +115,8 @@
   padding: 6px 10px;
   border-radius: 999px;
   border: 1px solid var(--border);
-  background: rgba(9, 18, 27, 0.9);
-  color: #d5e8f7;
+  background: rgba(10, 22, 16, 0.9);
+  color: #d5efdf;
   text-decoration: none;
   font-size: 0.78rem;
   font-weight: 600;
@@ -129,16 +129,16 @@
 
 .footer-link:hover,
 .footer-link:focus-visible {
-  border-color: rgba(120, 179, 214, 0.75);
-  background: rgba(20, 39, 54, 0.95);
-  color: #ecf8ff;
+  border-color: rgba(106, 176, 136, 0.75);
+  background: rgba(20, 44, 32, 0.95);
+  color: #e8fff0;
 }
 
 .footer-links-note {
   margin: 0;
   font-family: "Spline Sans Mono", monospace;
   font-size: 0.76rem;
-  color: #9bb3c5;
+  color: #9bc5a8;
   opacity: 0.8;
 }
 
@@ -148,7 +148,7 @@
   margin: 12px 20px;
   font-size: 0.82rem;
   line-height: 1.5;
-  color: #b8cedd;
+  color: #b8d4c5;
 }
 
 .hug-rows {
@@ -168,7 +168,7 @@
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.07em;
-  color: #6a90a8;
+  color: #6aa88a;
 }
 
 .hug-row-content {
@@ -212,8 +212,8 @@
   height: 36px;
   border-radius: 10px;
   border: 1px solid var(--border);
-  background: rgba(9, 18, 27, 0.9);
-  color: #c8dff0;
+  background: rgba(10, 22, 16, 0.9);
+  color: #c8efd8;
   text-decoration: none;
   flex: 0 0 auto;
   transition:
@@ -225,9 +225,9 @@
 
 a.social-badge:hover,
 a.social-badge:focus-visible {
-  border-color: rgba(120, 179, 214, 0.75);
-  background: rgba(20, 39, 54, 0.95);
-  color: #ecf8ff;
+  border-color: rgba(106, 176, 136, 0.75);
+  background: rgba(20, 44, 32, 0.95);
+  color: #e8fff0;
   transform: translateY(-1px);
 }
 

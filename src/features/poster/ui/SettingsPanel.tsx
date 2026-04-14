@@ -279,6 +279,13 @@ export default function SettingsPanel({
                 form={state.form}
                 onChange={handleChange}
                 fontOptions={FONT_OPTIONS}
+                onApplyPreset={(title, subtitle) => {
+                  dispatch({ 
+                    type: "SET_FORM_FIELDS", 
+                    fields: { displayCity: title, displayCountry: subtitle },
+                    resetDisplayNameOverrides: false,
+                  });
+                }}
               />
             ) : null}
           </div>

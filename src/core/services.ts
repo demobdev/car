@@ -10,6 +10,7 @@ import { localStorageCache } from "@/core/cache/localStorageCache";
 import { fetchAdapter } from "@/core/http/fetchAdapter";
 import { googleFontsAdapter } from "@/core/fonts/googleFontsAdapter";
 import { createNominatimAdapter } from "@/features/location/infrastructure/nominatimAdapter";
+import { PrintfulProvider } from "@/features/checkout/infrastructure/PrintfulProvider";
 
 /* ── Location / Geocoding ── */
 
@@ -40,3 +41,14 @@ export { createPdfBlobFromCanvas } from "@/features/export/infrastructure/pdfExp
 export { createPosterFilename } from "@/features/export/infrastructure/filenameGenerator";
 
 export { triggerDownloadBlob } from "@/features/export/infrastructure/fileDownloader";
+
+/* ── Poster draft persistence ── */
+
+import { SupabaseDraftRepository } from "@/features/poster/infrastructure/SupabaseDraftRepository";
+
+export const posterDraftRepository = new SupabaseDraftRepository();
+
+/* ── Print Provider ── */
+
+export const printProvider = new PrintfulProvider(fetchAdapter);
+

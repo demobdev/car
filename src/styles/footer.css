@@ -12,18 +12,28 @@
   font-size: 0.8rem;
   font-family: "Spline Sans Mono", monospace;
   opacity: 0.74;
-  color: #9bb3c5;
+  color: #9bc5a8;
 }
 
 .source-link {
-  color: #cbe8ff;
+  color: #b8e8cb;
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 
 .source-link:hover,
 .source-link:focus-visible {
-  color: #ecf8ff;
+  color: #d8ffe8;
+}
+
+/* Footer button links (Licenses, Attribution) */
+.source-link--btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+  font-size: inherit;
 }
 
 .made-note {
@@ -36,4 +46,174 @@
 .heart {
   margin: 0 2px;
   color: #ffb38f;
+}
+
+/* ── Licenses & Attribution modal extensions ── */
+
+.licenses-modal-content,
+.attribution-modal-content {
+  padding: 8px 4px;
+}
+
+.licenses-modal-content h2,
+.attribution-modal-content h2 {
+  margin: 0 0 16px;
+  font-family: "Instrument Sans", sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #e8efe6;
+}
+
+.license-section {
+  margin-bottom: 18px;
+}
+
+.license-section h3 {
+  margin: 0 0 6px;
+  font-family: "Spline Sans Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.78rem;
+  color: #7ab88e;
+}
+
+.license-section p {
+  margin: 0 0 6px;
+  font-size: 0.83rem;
+  line-height: 1.5;
+  color: #b8cedd;
+}
+
+.license-section a {
+  color: #b8e8cb;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.license-section a:hover {
+  color: #d8ffe8;
+}
+
+.attribution-intro {
+  margin: 0 0 16px;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: #b8cedd;
+}
+
+.attribution-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.attribution-table th {
+  text-align: left;
+  padding: 8px 10px;
+  font-family: "Spline Sans Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #7ab88e;
+  border-bottom: 1px solid var(--strong-line);
+}
+
+.attribution-table td {
+  padding: 8px 10px;
+  color: #c5ddd0;
+  border-bottom: 1px solid var(--line);
+}
+
+.attribution-table a {
+  color: #b8e8cb;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.attribution-table a:hover {
+  color: #d8ffe8;
+}
+
+/* ── Checkout CTA ── */
+
+.checkout-cta-wrap {
+  position: relative;
+}
+
+.checkout-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 1px solid rgba(106, 176, 136, 0.4);
+  background: linear-gradient(135deg, rgba(26, 58, 42, 0.9), rgba(14, 36, 24, 0.95));
+  color: #d8ffe8;
+  font-family: "Instrument Sans", sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease,
+    transform 0.12s ease,
+    box-shadow 0.18s ease;
+}
+
+.checkout-cta-btn:hover {
+  border-color: rgba(106, 176, 136, 0.7);
+  background: linear-gradient(135deg, rgba(34, 72, 52, 0.95), rgba(20, 48, 32, 0.98));
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(106, 176, 136, 0.2);
+}
+
+.checkout-cta-toast {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: 320px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--sheet-bg);
+  color: #c5ddd0;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  animation: toast-in 0.2s ease-out;
+}
+
+.checkout-cta-toast p {
+  margin: 0;
+}
+
+.checkout-cta-toast-close {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  background: none;
+  border: none;
+  color: #9bc5a8;
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+}
+
+.checkout-cta-toast-close:hover {
+  color: #d8ffe8;
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
 }

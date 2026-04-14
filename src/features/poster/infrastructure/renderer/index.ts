@@ -79,6 +79,8 @@ export async function compositeExport(
     showPosterText,
     showOverlay,
     includeCredits,
+    options.locationText,
+    options.occasion,
   );
 
   const size: CanvasSize = {

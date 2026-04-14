@@ -1,0 +1,141 @@
+.homepage {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  /* Use a pure deep elegant green for background */
+  background-color: var(--primary-bg, #0b110c);
+  color: var(--primary-text, #f0f4f1);
+  font-family: var(--font-family, 'Inter', sans-serif);
+}
+
+.homepage-hero {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 2rem;
+  background: radial-gradient(circle at 50% 30%, #152418 0%, #0b110c 70%);
+}
+
+.hero-title {
+  font-size: clamp(3rem, 6vw, 5rem);
+  font-weight: 800;
+  line-height: 1.05;
+  margin: 0 0 1.5rem;
+  max-width: 900px;
+  letter-spacing: -0.03em;
+  background: linear-gradient(180deg, #ffffff 0%, #a8d5b4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #fff;
+}
+
+.hero-subtitle {
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  font-weight: 400;
+  color: #a3b8a8;
+  max-width: 650px;
+  margin: 0 0 3rem;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+}
+
+.hero-cta-button {
+  background-color: #4ade80;
+  color: #062f14;
+  border: none;
+  border-radius: 9999px; /* Pill shape for premium feel */
+  padding: 1.25rem 3rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.4);
+}
+
+.hero-cta-button:hover {
+  transform: translateY(-2px);
+  background-color: #3bb366;
+  box-shadow: 0 8px 24px rgba(74, 222, 128, 0.3);
+}
+
+.hero-cta-button:active {
+  transform: translateY(1px);
+}
+
+.recent-drafts {
+  margin-top: 4rem;
+  width: 100%;
+  max-width: 600px;
+  animation: fadeIn 0.8s ease-out 0.4s both;
+}
+
+.recent-drafts h3 {
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #6a8c71;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.drafts-grid {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.draft-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  flex: 1;
+  max-width: 180px;
+  text-align: left;
+}
+
+.draft-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.draft-title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 0.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.draft-date {
+  font-size: 0.75rem;
+  color: #6a8c71;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+  .drafts-grid {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .draft-card {
+    max-width: none;
+  }
+}

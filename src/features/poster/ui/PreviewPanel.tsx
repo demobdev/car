@@ -428,6 +428,8 @@ export default function PreviewPanel() {
           <PosterTextOverlay
             city={cityLabel}
             country={countryLabel}
+            occasion={form.occasion}
+            locationText={form.location}
             lat={formLat}
             lon={formLon}
             fontFamily={form.fontFamily}

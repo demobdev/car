@@ -9,7 +9,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 12px;
-  margin-bottom: 14px;
+  margin-bottom: 20px;
 }
 
 .general-header-actions {
@@ -28,7 +28,7 @@
   align-items: center;
   justify-content: center;
   gap: 0;
-  padding: 7px 14px;
+  padding: 8px 16px;
   border: 1px solid rgba(146, 176, 200, 0.28);
   border-radius: 9px;
   background: transparent;
@@ -272,18 +272,18 @@ pre.install-help-modal-text {
 
 .accordion-header:hover {
   color: #dff0ff;
-  background: rgba(94, 174, 212, 0.07);
+  background: rgba(168, 213, 180, 0.07);
 }
 
 .accordion-header.is-open {
-  color: #b8ecff;
+  color: #d5f3df;
 }
 
 .accordion-icon {
   width: 18px;
   height: 18px;
   flex-shrink: 0;
-  color: #88b7d5;
+  color: #a8d5b4;
 }
 
 .accordion-label {

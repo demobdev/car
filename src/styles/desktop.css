@@ -57,7 +57,7 @@
     overflow: hidden;
     display: grid;
     grid-template-columns: 64px 1fr;
-    grid-template-rows: 62px 1fr;
+    grid-template-rows: 64px 1fr;
     grid-template-areas:
       "dheader dheader"
       "dnav    dmap";
@@ -77,7 +77,8 @@
     align-items: center;
     justify-content: space-between;
     margin: 0;
-    padding: 0 20px;
+    padding: 0 24px;
+    height: 100%; /* Fill the 80px grid row */
     background: var(--overlay-bg);
     border-bottom: 1px solid rgba(146, 176, 200, 0.12);
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.28);
@@ -108,7 +109,7 @@
   .desktop-brand-title {
     margin: 0;
     font-family: "Bebas Neue", sans-serif;
-    font-size: 1.62rem;
+    font-size: 1.7rem;
     line-height: 1;
     letter-spacing: 0.03em;
     color: #ecf5ff;
@@ -161,9 +162,9 @@
 
   .general-header-social-btn:hover,
   .general-header-social-btn:focus-visible {
-    background: rgba(94, 174, 212, 0.1);
-    border-color: rgba(94, 174, 212, 0.5);
-    color: #c8e8f8;
+    background: rgba(168, 213, 180, 0.1);
+    border-color: rgba(168, 213, 180, 0.5);
+    color: #e8f5ed;
   }
 
   .general-header-social-btn--github {
@@ -202,9 +203,9 @@
   .general-header-text-btn:hover:not(:disabled) {
     transform: none;
     filter: none;
-    background: rgba(94, 174, 212, 0.1);
-    border-color: rgba(94, 174, 212, 0.5);
-    color: #c8e8f8;
+    background: rgba(168, 213, 180, 0.1);
+    border-color: rgba(168, 213, 180, 0.5);
+    color: #e8f5ed;
   }
 
   .general-header-btn-label {
@@ -264,13 +265,13 @@
   .desktop-nav-tab:hover {
     transform: none;
     filter: none;
-    background: rgba(94, 174, 212, 0.1);
+    background: rgba(168, 213, 180, 0.1);
     color: rgba(180, 205, 225, 0.72);
   }
 
   .desktop-nav-tab.is-active {
-    background: rgba(55, 171, 203, 0.16);
-    color: #7dd8f0;
+    background: rgba(168, 213, 180, 0.16);
+    color: #a8d5b4;
   }
 
   .desktop-nav-icon {
@@ -374,7 +375,7 @@
     background: transparent;
     border: none;
     border-radius: 0;
-    color: #e8f4ff;
+    color: #a8d5b4;
     font-family: "Spline Sans Mono", monospace;
     font-size: 0.82rem;
     box-shadow: none;
@@ -561,7 +562,7 @@
   }
 
   .dsk-loc-bar .dsk-loc-coords input:focus {
-    border-color: rgba(94, 174, 212, 0.5);
+    border-color: rgba(168, 213, 180, 0.5);
     box-shadow: none;
   }
 
@@ -1028,8 +1029,8 @@
   .about-modal-close:hover {
     transform: none;
     filter: none;
-    background: rgba(94, 174, 212, 0.1);
-    color: #c8e8f8;
+    background: rgba(168, 213, 180, 0.1);
+    color: #e8f5ed;
     border-color: rgba(94, 174, 212, 0.4);
   }
 

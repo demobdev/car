@@ -16,7 +16,7 @@
   text-transform: uppercase;
   letter-spacing: 0.1em;
   font-size: 0.76rem;
-  color: #88b7d5;
+  color: #a8d5b4;
 }
 
 label {
@@ -121,7 +121,7 @@ label {
   margin-top: -5px;
   border-radius: 999px;
   border: 2px solid #e8f3fb;
-  background: radial-gradient(circle at 35% 35%, #4ca9cd, #2a7fa0 70%);
+  background: radial-gradient(circle at 35% 35%, #4ade80, #3bb366 70%);
   box-shadow:
     0 0 0 2px rgba(5, 13, 20, 0.45),
     0 2px 6px rgba(0, 0, 0, 0.35);
@@ -146,7 +146,7 @@ label {
   height: 20px;
   border-radius: 999px;
   border: 2px solid #e8f3fb;
-  background: radial-gradient(circle at 35% 35%, #4ca9cd, #2a7fa0 70%);
+  background: radial-gradient(circle at 35% 35%, #4ade80, #3bb366 70%);
   box-shadow:
     0 0 0 2px rgba(5, 13, 20, 0.45),
     0 2px 6px rgba(0, 0, 0, 0.35);
@@ -188,7 +188,7 @@ label {
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-size: 0.72rem;
-  color: #88b7d5;
+  color: #a8d5b4;
 }
 
 .map-details-card {
@@ -259,7 +259,7 @@ label {
 }
 
 .theme-switch input:checked + .theme-switch-track {
-  background: #5eaed4;
+  background: #a8d5b4;
 }
 
 .theme-switch input:checked + .theme-switch-track::after {
@@ -267,7 +267,7 @@ label {
 }
 
 .theme-switch input:focus-visible + .theme-switch-track {
-  box-shadow: 0 0 0 3px rgba(75, 149, 186, 0.3);
+  box-shadow: 0 0 0 3px rgba(168, 213, 180, 0.3);
 }
 
 .credits-toggle-field {
@@ -500,8 +500,8 @@ input::placeholder {
 
 input:not([type="checkbox"]):not([type="radio"]):focus,
 select:focus {
-  border-color: rgba(102, 174, 209, 0.82);
-  box-shadow: 0 0 0 3px rgba(75, 149, 186, 0.24);
+  border-color: rgba(168, 213, 180, 0.82);
+  box-shadow: 0 0 0 3px rgba(168, 213, 180, 0.24);
 }
 
 .location-autocomplete {
@@ -905,7 +905,7 @@ button.color-editor-target {
 
 button.color-editor-target.is-active {
   border-color: var(--focus-ring);
-  box-shadow: 0 0 0 2px rgba(75, 149, 186, 0.24);
+  box-shadow: 0 0 0 2px rgba(168, 213, 180, 0.24);
 }
 
 button.color-editor-target:not(:disabled):hover,
@@ -2080,7 +2080,7 @@ button.marker-row__icon-btn--danger {
   margin-top: -6px;
   border-radius: 999px;
   border: 2px solid #e8f3fb;
-  background: radial-gradient(circle at 35% 35%, #4ca9cd, #2a7fa0 70%);
+  background: radial-gradient(circle at 35% 35%, #4ade80, #3bb366 70%);
   box-shadow:
     0 0 0 2px rgba(5, 13, 20, 0.45),
     0 2px 6px rgba(0, 0, 0, 0.35);
@@ -2104,7 +2104,7 @@ button.marker-row__icon-btn--danger {
   height: 22px;
   border-radius: 999px;
   border: 2px solid #e8f3fb;
-  background: radial-gradient(circle at 35% 35%, #4ca9cd, #2a7fa0 70%);
+  background: radial-gradient(circle at 35% 35%, #4ade80, #3bb366 70%);
   box-shadow:
     0 0 0 2px rgba(5, 13, 20, 0.45),
     0 2px 6px rgba(0, 0, 0, 0.35);

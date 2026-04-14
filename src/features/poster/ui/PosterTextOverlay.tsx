@@ -2,6 +2,7 @@ import { formatCoordinates } from "@/shared/geo/posterBounds";
 import { APP_CREDIT_URL } from "@/core/config";
 import {
   TEXT_DIMENSION_REFERENCE_PX,
+  TEXT_OCCASION_Y_RATIO,
   TEXT_CITY_Y_RATIO,
   TEXT_DIVIDER_Y_RATIO,
   TEXT_COUNTRY_Y_RATIO,
@@ -19,6 +20,8 @@ import {
 interface PosterTextOverlayProps {
   city: string;
   country: string;
+  occasion?: string;
+  locationText?: string;
   lat: number;
   lon: number;
   fontFamily: string;
@@ -27,6 +30,7 @@ interface PosterTextOverlayProps {
   showPosterText: boolean;
   includeCredits: boolean;
   showOverlay: boolean;
+  isMatted?: boolean;
 }
 
 /**
@@ -37,6 +41,8 @@ interface PosterTextOverlayProps {
 export default function PosterTextOverlay({
   city,
   country,
+  occasion,
+  locationText,
   lat,
   lon,
   fontFamily,
@@ -45,6 +51,7 @@ export default function PosterTextOverlay({
   showPosterText,
   includeCredits,
   showOverlay,
+  isMatted = false,
 }: PosterTextOverlayProps) {
   const toCqMin = (px: number) => (px / TEXT_DIMENSION_REFERENCE_PX) * 100;
 
@@ -60,19 +67,37 @@ export default function PosterTextOverlay({
   const countryFontSize = `${toCqMin(COUNTRY_FONT_BASE_PX)}cqmin`;
   const coordsFontSize = `${toCqMin(COORDS_FONT_BASE_PX)}cqmin`;
   const attributionFontSize = `${toCqMin(ATTRIBUTION_FONT_BASE_PX)}cqmin`;
-  const attributionColor = computeAttributionColor(textColor, landColor, showOverlay);
-  const attributionOpacity = showOverlay ? 0.55 : 0.9;
+  
+  // Logic overrides for matted layout
+  const activeTextColor = isMatted ? "#1a1a1a" : textColor;
+  const attributionColor = isMatted ? "#1a1a1a" : computeAttributionColor(textColor, landColor, showOverlay);
+  const attributionOpacity = isMatted ? 0.4 : (showOverlay ? 0.55 : 0.9);
 
   return (
-    <div className="poster-text-overlay" style={{ color: textColor }}>
+    <div className={`poster-text-overlay ${isMatted ? 'is-matted' : ''}`} style={{ color: activeTextColor }}>
       {showPosterText && (
         <>
+          {occasion && (
+            <p
+              className="poster-occasion"
+              style={{
+                fontFamily: titleFont,
+                top: `${TEXT_OCCASION_Y_RATIO * 100}%`,
+                fontSize: `${toCqMin(COUNTRY_FONT_BASE_PX) * 0.8}cqmin`,
+                fontWeight: 500,
+                opacity: 0.9
+              }}
+            >
+              {occasion.toUpperCase()}
+            </p>
+          )}
           <p
             className="poster-city"
             style={{
               fontFamily: titleFont,
-              top: `${TEXT_CITY_Y_RATIO * 100}%`,
-              fontSize: cityFontSize,
+              top: isMatted ? "auto" : `${TEXT_CITY_Y_RATIO * 100}%`,
+              bottom: isMatted ? "6.0%" : "auto",
+              fontSize: isMatted ? `${toCqMin(CITY_FONT_BASE_PX) * 0.65}cqmin` : cityFontSize,
             }}
           >
             {cityLabel}
@@ -80,16 +105,20 @@ export default function PosterTextOverlay({
           <hr
             className="poster-divider"
             style={{
-              borderColor: textColor,
-              top: `${TEXT_DIVIDER_Y_RATIO * 100}%`,
+              borderColor: activeTextColor,
+              top: isMatted ? "auto" : `${TEXT_DIVIDER_Y_RATIO * 100}%`,
+              bottom: isMatted ? "6.1%" : "auto",
+              width: isMatted ? "15%" : undefined,
+              transform: isMatted ? "translateX(15%)" : undefined
             }}
           />
           <p
             className="poster-country"
             style={{
               fontFamily: titleFont,
-              top: `${TEXT_COUNTRY_Y_RATIO * 100}%`,
-              fontSize: countryFontSize,
+              top: isMatted ? "auto" : `${TEXT_COUNTRY_Y_RATIO * 100}%`,
+              bottom: isMatted ? "3.0%" : "auto",
+              fontSize: isMatted ? `${toCqMin(COUNTRY_FONT_BASE_PX) * 0.75}cqmin` : countryFontSize,
             }}
           >
             {country.toUpperCase()}
@@ -98,10 +127,12 @@ export default function PosterTextOverlay({
             className="poster-coords"
             style={{
               fontFamily: bodyFont,
-              top: `${TEXT_COORDS_Y_RATIO * 100}%`,
-              fontSize: coordsFontSize,
+              top: isMatted ? "auto" : `${TEXT_COORDS_Y_RATIO * 100}%`,
+              bottom: isMatted ? "1.5%" : "auto",
+              fontSize: isMatted ? `${toCqMin(COORDS_FONT_BASE_PX) * 0.9}cqmin` : coordsFontSize,
             }}
           >
+            {locationText ? `${locationText.split(",").slice(0, 2).join(",")}  |  ` : ""}
             {formatCoordinates(lat, lon)}
           </p>
         </>
@@ -114,8 +145,8 @@ export default function PosterTextOverlay({
           color: attributionColor,
           opacity: attributionOpacity,
           fontSize: attributionFontSize,
-          bottom: `${TEXT_EDGE_MARGIN_RATIO * 100}%`,
-          right: `${TEXT_EDGE_MARGIN_RATIO * 100}%`,
+          bottom: isMatted ? "0.6%" : `${TEXT_EDGE_MARGIN_RATIO * 100}%`,
+          right: isMatted ? "1%" : `${TEXT_EDGE_MARGIN_RATIO * 100}%`,
         }}
       >
         &copy; OpenStreetMap contributors

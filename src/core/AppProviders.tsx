@@ -9,6 +9,14 @@ interface AppProvidersProps {
  * Wraps the application in all required context providers.
  * Add new providers here as needed.
  */
+import { ToastProvider } from "@/shared/context/ToastContext";
+
 export function AppProviders({ children }: AppProvidersProps) {
-  return <PosterProvider>{children}</PosterProvider>;
+  return (
+    <ToastProvider>
+      <PosterProvider>
+        {children}
+      </PosterProvider>
+    </ToastProvider>
+  );
 }

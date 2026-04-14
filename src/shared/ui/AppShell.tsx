@@ -19,13 +19,15 @@ import {
   type SupportPromptState,
 } from "@/features/export/application/useExport";
 
-const AboutModal = lazy(() => import("@/shared/ui/AboutModal"));
+const LicensesModal = lazy(() => import("@/shared/ui/LicensesModal"));
+const AttributionModal = lazy(() => import("@/shared/ui/AttributionModal"));
 const SettingsPanel = lazy(() => import("@/features/poster/ui/SettingsPanel"));
 const AnnouncementModal = lazy(
   () => import("@/features/updates/ui/AnnouncementModal"),
 );
 const ExportFab = lazy(() => import("@/features/export/ui/ExportFab"));
 const DesktopLocationBar = lazy(() => import("@/shared/ui/DesktopLocationBar"));
+const CheckoutDrawer = lazy(() => import("@/features/checkout/ui/CheckoutDrawer"));
 
 function SettingsDrawer({
   mobileTab,
@@ -65,8 +67,14 @@ function SettingsDrawer({
   );
 }
 
+import { posterDraftRepository } from "@/core/services";
+import { useToast } from "@/shared/context/ToastContext";
+
+import { captureThumbnail } from "@/features/export/application/snapshotService";
+import { getAllMarkerIcons } from "@/features/markers/infrastructure/iconRegistry";
+
 export default function AppShell() {
-  const { state, dispatch } = usePosterContext();
+  const { state, dispatch, mapRef, effectiveTheme } = usePosterContext();
   const { isMarkerEditorActive } = state;
   const activeMarker =
     state.activeMarkerId !== null
@@ -85,8 +93,48 @@ export default function AppShell() {
   const [desktopPanelOpen, setDesktopPanelOpen] = useState(false);
   const [desktopLocationRowVisible, setDesktopLocationRowVisible] =
     useState(true);
-  const [aboutOpen, setAboutOpen] = useState(false);
+  const [licensesOpen, setLicensesOpen] = useState(false);
+  const [attributionOpen, setAttributionOpen] = useState(false);
   const [supportPrompt, setSupportPrompt] = useState<SupportPromptState | null>(null);
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+
+  const { showToast } = useToast();
+
+  const handleSaveDraft = useCallback(async () => {
+    const map = mapRef.current;
+    if (!map) return;
+
+    showToast("Capturing studio snapshot...", "info");
+    
+    try {
+      // 1. Snapshot the current art
+      const thumbnailUrl = await captureThumbnail({
+        map,
+        theme: effectiveTheme,
+        form: state.form,
+        markers: state.markers,
+        markerIcons: getAllMarkerIcons(state.customMarkerIcons)
+      });
+
+      // 2. Prepare payload with visual URL
+      const draftId = `draft_${Date.now()}`;
+      const draftPayload = {
+        id: draftId,
+        form: state.form,
+        imageUrl: thumbnailUrl, // Pass the visual thumbnail URL
+        customColors: state.customColors,
+        markers: state.markers,
+        updatedAt: new Date().toISOString(),
+      };
+
+      // 3. Sync to Supabase
+      await posterDraftRepository.save(draftPayload);
+      showToast("Masterpiece shared with global studio!");
+    } catch (err: any) {
+      console.error("Studio sync failed:", err);
+      showToast("Failed to sync masterpiece. Check connection.", "error");
+    }
+  }, [state, mapRef, effectiveTheme, showToast]);
 
   useEffect(() => {
     const handler = (e: Event) => {
@@ -197,9 +245,12 @@ export default function AppShell() {
       data-mobile-tab={mobileTab}
       data-desktop-tab={desktopTab}
     >
-      <GeneralHeader onAboutOpen={() => setAboutOpen(true)} />
+      <GeneralHeader
+        onSaveDraft={handleSaveDraft}
+        onOrderPrint={() => setIsCheckoutOpen(true)}
+      />
       <InstallPrompt />
-      <StartupLocationModal />
+      {!state.hasSeenStartupModal && <StartupLocationModal />}
 
       <DesktopNavBar
         activeTab={desktopTab}
@@ -296,13 +347,21 @@ export default function AppShell() {
         <ExportFab isMobile={isMobileViewport} />
       </Suspense>
 
-      <FooterNote />
+      <FooterNote
+        onLicensesOpen={() => setLicensesOpen(true)}
+        onAttributionOpen={() => setAttributionOpen(true)}
+      />
       <Suspense fallback={null}>
         <AnnouncementModal />
       </Suspense>
-      {aboutOpen ? (
+      {licensesOpen ? (
         <Suspense fallback={null}>
-          <AboutModal onClose={() => setAboutOpen(false)} />
+          <LicensesModal onClose={() => setLicensesOpen(false)} />
+        </Suspense>
+      ) : null}
+      {attributionOpen ? (
+        <Suspense fallback={null}>
+          <AttributionModal onClose={() => setAttributionOpen(false)} />
         </Suspense>
       ) : null}
       {supportPrompt ? (
@@ -311,6 +370,11 @@ export default function AppShell() {
           variant={supportPrompt.variant}
           onClose={() => setSupportPrompt(null)}
         />
+      ) : null}
+      {isCheckoutOpen ? (
+        <Suspense fallback={null}>
+          <CheckoutDrawer onClose={() => setIsCheckoutOpen(false)} />
+        </Suspense>
       ) : null}
     </div>
   );

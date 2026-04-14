@@ -3,6 +3,7 @@ import type { Coordinate } from "@/shared/geo/types";
 import { APP_CREDIT_URL } from "@/core/config";
 import {
   TEXT_DIMENSION_REFERENCE_PX,
+  TEXT_OCCASION_Y_RATIO,
   TEXT_CITY_Y_RATIO,
   TEXT_DIVIDER_Y_RATIO,
   TEXT_COUNTRY_Y_RATIO,
@@ -12,7 +13,6 @@ import {
   COUNTRY_FONT_BASE_PX,
   COORDS_FONT_BASE_PX,
   ATTRIBUTION_FONT_BASE_PX,
-  isLatinScript,
   formatCityLabel,
   computeCityFontScale,
   computeAttributionColor,
@@ -22,7 +22,7 @@ export function drawPosterText(
   ctx: CanvasRenderingContext2D,
   width: number,
   height: number,
-  theme: { ui?: { text?: string } },
+  theme: { ui?: { text?: string }; map?: { land?: string } },
   center: Coordinate,
   city: string,
   country: string,
@@ -30,6 +30,8 @@ export function drawPosterText(
   showPosterText: boolean,
   showOverlay: boolean,
   includeCredits: boolean = true,
+  locationText?: string,
+  occasion?: string,
 ): void {
   const textColor = theme.ui?.text || "#111111";
   const landColor = theme.map?.land || "#808080";
@@ -55,6 +57,7 @@ export function drawPosterText(
     const countryFontSize = COUNTRY_FONT_BASE_PX * dimScale;
     const coordinateFontSize = COORDS_FONT_BASE_PX * dimScale;
     const cityY = height * TEXT_CITY_Y_RATIO;
+    const occasionY = height * TEXT_OCCASION_Y_RATIO;
     const lineY = height * TEXT_DIVIDER_Y_RATIO;
     const countryY = height * TEXT_COUNTRY_Y_RATIO;
     const coordinatesY = height * TEXT_COORDS_Y_RATIO;
@@ -62,6 +65,14 @@ export function drawPosterText(
     ctx.fillStyle = textColor;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
+
+    if (occasion) {
+      ctx.font = `500 ${countryFontSize * 0.8}px ${titleFontFamily}`;
+      ctx.globalAlpha = 0.9;
+      ctx.fillText(occasion.toUpperCase(), width * 0.5, occasionY);
+      ctx.globalAlpha = 1;
+    }
+
     ctx.font = `700 ${cityFontSize}px ${titleFontFamily}`;
     ctx.fillText(cityLabel, width * 0.5, cityY);
 
@@ -77,8 +88,12 @@ export function drawPosterText(
 
     ctx.globalAlpha = 0.75;
     ctx.font = `400 ${coordinateFontSize}px ${bodyFontFamily}`;
+    const coordsStr = formatCoordinates(center.lat, center.lon);
+    const finalLocationStr = locationText 
+      ? `${locationText.split(",").slice(0, 2).join(",")}  |  ${coordsStr}`
+      : coordsStr;
     ctx.fillText(
-      formatCoordinates(center.lat, center.lon),
+      finalLocationStr,
       width * 0.5,
       coordinatesY,
     );

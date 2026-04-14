@@ -40,6 +40,7 @@ export interface PosterForm {
   includeRoadMinorLow: boolean;
   includeRoadOutline: boolean;
   showMarkers: boolean;
+  occasion: string;
 }
 
 /* ────── App-level state ────── */
@@ -61,6 +62,7 @@ export interface PosterState {
     city: boolean;
     country: boolean;
   };
+  hasSeenStartupModal: boolean;
 }
 
 /* ────── Actions ────── */
@@ -97,7 +99,9 @@ export type PosterAction =
       defaults: Partial<MarkerDefaults>;
       applyToMarkers?: boolean;
     }
-  | { type: "RESET_MARKER_DEFAULTS" };
+  | { type: "RESET_MARKER_DEFAULTS" }
+  | { type: "COMPLETE_STARTUP" }
+  | { type: "HYDRATE_DRAFT"; draft: any }; // Using any for brevity of the payload which matches the serializable state
 
 /* ────── Reducer ────── */
 
@@ -352,6 +356,22 @@ export function posterReducer(
           : state.markers,
       };
     }
+
+    case "HYDRATE_DRAFT":
+      return {
+        ...state,
+        markers: action.draft.markers || [],
+        displayNameOverrides: { city: true, country: true }, // Assume custom headers are set in drafts
+        form: { 
+          ...state.form, 
+          ...action.draft.form,
+          occasion: action.draft.form.occasion || ""
+        },
+        hasSeenStartupModal: true,
+      };
+
+    case "COMPLETE_STARTUP":
+      return { ...state, hasSeenStartupModal: true };
 
     case "RESET_MARKER_DEFAULTS": {
       const defaults = createDefaultMarkerSettings();

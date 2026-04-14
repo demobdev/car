@@ -1,11 +1,17 @@
-﻿import { APP_VERSION, CONTACT_EMAIL, LEGAL_NOTICE_URL, PRIVACY_URL } from "@/core/config";
+import { APP_VERSION, CONTACT_EMAIL, LEGAL_NOTICE_URL, PRIVACY_URL, REPO_URL } from "@/core/config";
 import { InfoIcon } from "@/shared/ui/Icons";
 
-export default function FooterNote() {
+interface FooterNoteProps {
+  onLicensesOpen?: () => void;
+  onAttributionOpen?: () => void;
+}
+
+export default function FooterNote({ onLicensesOpen, onAttributionOpen }: FooterNoteProps) {
   const appVersion = APP_VERSION;
   const contactEmail = String(CONTACT_EMAIL ?? "").trim();
   const legalNoticeUrl = String(LEGAL_NOTICE_URL ?? "").trim();
   const privacyUrl = String(PRIVACY_URL ?? "").trim();
+  const repoUrl = String(REPO_URL ?? "").trim();
   const hasLegal = Boolean(contactEmail || legalNoticeUrl || privacyUrl);
 
   return (
@@ -42,12 +48,54 @@ export default function FooterNote() {
             )}
           </p>
         ) : null}
+        <p className="source-note cartographica-compliance-links">
+          {onLicensesOpen ? (
+            <button
+              type="button"
+              className="source-link source-link--btn"
+              onClick={onLicensesOpen}
+            >
+              Licenses
+            </button>
+          ) : null}
+          {onLicensesOpen && onAttributionOpen ? " | " : null}
+          {onAttributionOpen ? (
+            <button
+              type="button"
+              className="source-link source-link--btn"
+              onClick={onAttributionOpen}
+            >
+              Attribution
+            </button>
+          ) : null}
+          {repoUrl ? (
+            <>
+              {" | "}
+              <a
+                className="source-link"
+                href={repoUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Source Code
+              </a>
+            </>
+          ) : null}
+        </p>
       </div>
 
       <div className="desktop-footer-middle">
         <p className="made-note">
-          Terraink™ v{appVersion} | © 2026 | Made with{" "}
-          <span className="heart">❤︎</span> in Hannover, Germany
+          Cartographica v{appVersion} | Based on{" "}
+          <a
+            className="source-link"
+            href="https://github.com/mfranzreb/terraink"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Cartographica
+          </a>{" "}
+          open-source software
         </p>
       </div>
 

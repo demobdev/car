@@ -22,6 +22,8 @@ export interface ExportOptions {
   displayCity: string;
   displayCountry: string;
   displayContinent?: string;
+  locationText?: string;
+  occasion?: string;
   fontFamily: string;
   showPosterText: boolean;
   showOverlay?: boolean;

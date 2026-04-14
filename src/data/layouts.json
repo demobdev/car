@@ -6,7 +6,18 @@
       "name": "Print",
       "layouts": [
         {
+          "id": "print_18x24_portrait",
+          "name": "Gallery Standard (18x24)",
+          "description": "Standard US poster format (3:4 ratio).",
+          "width": 45.72,
+          "height": 60.96,
+          "unit": "cm",
+          "posterWidthCm": 45.72,
+          "posterHeightCm": 60.96
+        },
+        {
           "id": "print_a3_portrait",
+
           "name": "A3 Portrait",
           "description": "ISO A3 portrait format.",
           "width": 29.7,

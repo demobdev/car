@@ -1,14 +1,14 @@
 {
-  "name": "Terraink",
-  "short_name": "Terraink",
-  "description": "Free map poster and wallpaper creator. Design custom, print-ready map art for any location — export as PNG, PDF, or SVG.",
+  "name": "Cartographica",
+  "short_name": "Cartographica",
+  "description": "Design custom, print-ready map posters for any city or location. Choose from dozens of curated themes, customize typography, and export as PNG, PDF, or SVG.",
   "id": "/",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "background_color": "#0a1824",
-  "theme_color": "#0a1824",
+  "background_color": "#1a3a2a",
+  "theme_color": "#1a3a2a",
   "icons": [
     {
       "src": "/assets/favicon-16.png",

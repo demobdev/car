@@ -68,7 +68,7 @@ export default function SupportModal({
                 ✨ Your poster is ready!
               </p>
               <p className="support-modal__text">
-                If Terraink helped you create this poster, consider supporting the project.
+                If Cartographica helped you create this poster, consider supporting the project.
               </p>
               <p className="support-modal__text">
                 This was your poster <strong>#{posterNumber}</strong> 🎉

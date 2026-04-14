@@ -22,6 +22,8 @@ interface LayeredSvgOptions {
   center: { lat: number; lon: number };
   displayCity: string;
   displayCountry: string;
+  occasion?: string;
+  locationText?: string;
   fontFamily?: string;
   showPosterText: boolean;
   showOverlay: boolean;
@@ -76,6 +78,8 @@ export async function createLayeredSvgBlobFromMap({
   center,
   displayCity,
   displayCountry,
+  occasion,
+  locationText,
   fontFamily,
   showPosterText,
   showOverlay,
@@ -203,9 +207,10 @@ export async function createLayeredSvgBlobFromMap({
           displayCity,
           displayCountry,
           fontFamily,
-          showPosterText,
           showOverlay,
           includeCredits,
+          locationText,
+          occasion,
         );
       }),
     });

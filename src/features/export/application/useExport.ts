@@ -20,7 +20,7 @@ import {
   DEFAULT_POSTER_HEIGHT_CM,
 } from "@/core/config";
 
-const EXPORT_COUNT_STORAGE_KEY = "terraink.poster.count";
+const EXPORT_COUNT_STORAGE_KEY = "cartographica.poster.count";
 
 export type SupportPromptVariant = "first" | "milestone";
 
@@ -29,7 +29,7 @@ export interface SupportPromptState {
   variant: SupportPromptVariant;
 }
 
-export const SUPPORT_PROMPT_EVENT = "terraink:support-prompt";
+export const SUPPORT_PROMPT_EVENT = "cartographica:support-prompt";
 
 // Use a 1-year TTL so the export count persists across sessions.
 const EXPORT_COUNT_TTL_MS = 365 * 24 * 60 * 60 * 1000;
@@ -121,6 +121,7 @@ export function useExport() {
             showPosterText: form.showPosterText,
             showOverlay: form.showMarkers,
             includeCredits: form.includeCredits,
+            occasion: form.occasion,
             markers: hasVisibleMarkers ? state.markers : [],
             markerIcons: hasVisibleMarkers
               ? getAllMarkerIcons(state.customMarkerIcons)
@@ -154,10 +155,12 @@ export function useExport() {
           heightInches,
           displayCity: form.displayCity || form.location || "",
           displayCountry: form.displayCountry || "",
+          locationText: form.location,
           fontFamily: form.fontFamily.trim(),
           showPosterText: form.showPosterText,
           showOverlay: form.showMarkers,
           includeCredits: form.includeCredits,
+          occasion: form.occasion,
           markers: hasVisibleMarkers ? state.markers : [],
           markerIcons: hasVisibleMarkers
             ? getAllMarkerIcons(state.customMarkerIcons)

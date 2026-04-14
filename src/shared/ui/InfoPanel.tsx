@@ -74,8 +74,9 @@ function HelpUsGrowSection({
     <section className="info-panel-section">
       <h3>Help Us Grow</h3>
       <p className="hug-copy">
-        Terraink is 100% client-side and open-source. Help us build the future
-        of map art by contributing to our roadmap!
+        Cartographica is 100% client-side and built on open-source technology.
+        Help us build the future of custom map art by contributing to our
+        roadmap!
       </p>
 
       <div className="hug-rows">
@@ -89,7 +90,7 @@ function HelpUsGrowSection({
                 href={repoUrl}
                 target="_blank"
                 rel="noreferrer"
-                aria-label="Open Terraink repository on GitHub"
+                aria-label="Open Cartographica repository on GitHub"
               >
                 <GitHubIcon className="badge-icon" />
                 <span>GitHub Repo</span>
@@ -106,7 +107,7 @@ function HelpUsGrowSection({
                 href={`${repoUrl}/stargazers`}
                 target="_blank"
                 rel="noreferrer"
-                aria-label="Star Terraink on GitHub"
+                aria-label="Star Cartographica on GitHub"
               >
                 <StarIcon className="badge-icon" />
                 <span>{starsText !== null ? starsText : "Star"}</span>
@@ -126,7 +127,7 @@ function HelpUsGrowSection({
                 href={kofiUrl}
                 target="_blank"
                 rel="noreferrer"
-                aria-label="Support Terraink on Ko-fi"
+                aria-label="Support Cartographica on Ko-fi"
               >
                 <KofiIcon className="badge-icon" />
                 <span>Support on Ko-fi</span>
@@ -152,7 +153,7 @@ function HelpUsGrowSection({
                   href={href}
                   target="_blank"
                   rel="noreferrer"
-                  aria-label={`Follow Terraink on ${label}`}
+                  aria-label={`Follow Cartographica on ${label}`}
                   title={label}
                 >
                   <Icon className="social-icon" />

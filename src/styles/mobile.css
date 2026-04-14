@@ -169,8 +169,8 @@
   }
 
   .mobile-nav-tab.is-active {
-    background: rgba(55, 171, 203, 0.16);
-    color: #7dd8f0;
+    background: rgba(168, 213, 180, 0.16);
+    color: #a8d5b4;
   }
 
   .mobile-nav-icon {
@@ -340,8 +340,8 @@
   }
 
   .startup-location-input:focus {
-    border-color: rgba(112, 184, 222, 0.8);
-    box-shadow: 0 0 0 2px rgba(75, 149, 186, 0.22);
+    border-color: rgba(168, 213, 180, 0.8);
+    box-shadow: 0 0 0 2px rgba(168, 213, 180, 0.22);
   }
 
   .startup-location-action {
@@ -371,7 +371,7 @@
   }
 
   .startup-location-action--confirm {
-    background: linear-gradient(135deg, #1a6f8c, #2f8eaf);
+    background: linear-gradient(135deg, #2d5a42, #4ade80);
     color: #f4fbff;
   }
 
@@ -461,7 +461,7 @@
     gap: 6px;
     min-height: 42px;
     padding: 0 12px;
-    border: 1px solid rgba(112, 184, 222, 0.48);
+    border: 1px solid rgba(168, 213, 180, 0.48);
     border-radius: 12px;
     background: rgba(10, 20, 31, 0.96);
     color: #d8e8f4;
@@ -760,7 +760,7 @@
   }
 
   .mobile-drawer-handle:active::after {
-    background: rgba(125, 216, 240, 0.5);
+    background: rgba(168, 213, 180, 0.5);
   }
 
   .mobile-drawer-content {

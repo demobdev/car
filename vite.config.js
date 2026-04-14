@@ -39,6 +39,24 @@ export default defineConfig({
   define: {
     "import.meta.env.VITE_APP_VERSION": JSON.stringify(appVersion),
   },
+  server: {
+    proxy: {
+      "/api/printful": {
+        target: "https://api.printful.com",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/printful/, ""),
+      },
+      "/api/uploadthing": {
+        target: "http://localhost:3001",
+        changeOrigin: true,
+      },
+      "/api/checkout": {
+        target: "http://localhost:3001",
+        changeOrigin: true,
+      },
+    },
+  },
+
   build: {
     // maplibre-gl is distributed as a large prebundled module and remains a
     // single chunk even with manual chunking.

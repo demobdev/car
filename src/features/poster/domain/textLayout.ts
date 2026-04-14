@@ -5,6 +5,7 @@
 import { parseHex } from "@/shared/utils/color";
 export const TEXT_DIMENSION_REFERENCE_PX = 3600;
 
+export const TEXT_OCCASION_Y_RATIO = 0.81;
 export const TEXT_CITY_Y_RATIO = 0.845;
 export const TEXT_DIVIDER_Y_RATIO = 0.875;
 export const TEXT_COUNTRY_Y_RATIO = 0.9;
@@ -47,7 +48,8 @@ export function isLatinScript(text: string | undefined | null): boolean {
 }
 
 export function formatCityLabel(city: string): string {
-  return isLatinScript(city) ? city.toUpperCase().split("").join("  ") : city;
+  // Use a softer character gap instead of double spaces, or rely on CSS tracking
+  return isLatinScript(city) ? city.toUpperCase().split("").join(" ") : city;
 }
 
 /**
@@ -59,9 +61,10 @@ export function computeCityFontScale(city: string): number {
   if (len <= CITY_TEXT_SHRINK_THRESHOLD) {
     return 1;
   }
+  // Exponent or tighter fraction so long names scale down more aggressively
   return Math.max(
     CITY_FONT_MIN_PX / CITY_FONT_BASE_PX,
-    CITY_TEXT_SHRINK_THRESHOLD / len,
+    Math.pow(CITY_TEXT_SHRINK_THRESHOLD / len, 1.25),
   );
 }
 
