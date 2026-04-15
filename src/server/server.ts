@@ -205,10 +205,13 @@ app.post("/api/webhooks/stripe", async (c) => {
   return c.json({ received: true });
 });
 
-// Vercel / Node compat
+// Export for Vercel / Node compat
 export const GET = handle(app);
 export const POST = handle(app);
 export const OPTIONS = handle(app);
+
+// Export app instance for external handlers
+export { app };
 
 // Local Bun compat
 export default {
