@@ -30,7 +30,7 @@ interface SnapshotOptions {
 
 /** 
  * Captures the current map poster as a JPEG blob 
- * and uploads it to UploadThing. Returns the public URL.
+ * and uploads it to Supabase Storage. Returns the public URL.
  */
 export async function captureAndUploadSnapshot(opts: SnapshotOptions): Promise<string> {
   const { map, theme, form, markers = [], markerIcons = [] } = opts;

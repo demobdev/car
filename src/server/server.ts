@@ -1,4 +1,3 @@
-import { createRouteHandler, createUploadthing, type FileRouter } from "uploadthing/server";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { handle } from "hono/vercel";
@@ -13,34 +12,9 @@ const stripe = new Stripe(getEnv("STRIPE_SECRET_KEY"), {
   apiVersion: "2024-04-10",
 });
 
-const f = createUploadthing();
-
-// ... uploadRouter logic remains same ...
-export const uploadRouter = {
-  imageUploader: f({
-    image: {
-      maxFileSize: "8MB",
-      maxFileCount: 1,
-    },
-  })
-    .onUploadComplete(async ({ file }) => {
-      console.log("✅ Upload complete:", file.ufsUrl);
-      return { url: file.ufsUrl };
-    }),
-} satisfies FileRouter;
-
-export type OurFileRouter = typeof uploadRouter;
-
-const uploadHandler = createRouteHandler({
-  router: uploadRouter,
-  config: {
-    token: getEnv("UPLOADTHING_TOKEN"),
-  },
-});
-
 import { logger } from "hono/logger";
 
-const app = new Hono().basePath("/api");
+const app = new Hono();
 
 app.use("*", logger());
 
@@ -55,17 +29,17 @@ app.use(
   }),
 );
 
-app.get("/health", (c) => c.json({ status: "ok", time: new Date().toISOString() }));
+app.get("/api/health", (c) => c.json({ status: "ok", time: new Date().toISOString() }));
 
-// 1. SECURE PRINTFUL PROXY
-// This handles CORS and injects the API token so it never reaches the browser.
-app.all("/printful/*", async (c) => {
+// 1. SECURE PRINTFUL PROXY (ROBUST PARAMETER ROUTING)
+// This captures everything after /api/printful/ and forwards it to Printful.
+app.all("/api/printful/:path{.*}", async (c) => {
   const token = getEnv("PRINTFUL_API_TOKEN");
-  if (!token) return c.json({ error: "Printful configuration missing on server" }, 500);
+  if (!token) return c.json({ error: "Printful configuration missing" }, 500);
 
-  // Strip the /api/printful prefix to get the real Printful path
-  const path = c.req.path.replace(/^\/api\/printful/, "");
-  const url = `https://api.printful.com${path}${c.req.url.split("?")[1] ? "?" + c.req.url.split("?")[1] : ""}`;
+  const subPath = c.req.param("path");
+  const query = c.req.url.split("?")[1] || "";
+  const url = `https://api.printful.com/${subPath}${query ? "?" + query : ""}`;
 
   console.log(`[Proxy] Forwarding to Printful: ${url}`);
 
@@ -88,12 +62,11 @@ app.all("/printful/*", async (c) => {
     if (contentType?.includes("application/json")) {
       const data = await pfRes.json();
       return c.json(data, pfRes.status as any);
-    } else {
-      const text = await pfRes.text();
-      return c.text(text, pfRes.status as any);
     }
+    const text = await pfRes.text();
+    return c.text(text, pfRes.status as any);
   } catch (err: any) {
-    console.error("[Proxy Error] Printful call failed:", err.message);
+    console.error("[Proxy Error]:", err.message);
     return c.json({ error: "Upstream failure", detail: err.message }, 502);
   }
 });
@@ -108,9 +81,7 @@ const getStripe = () => {
   return stripeInstance;
 };
 
-app.all("/uploadthing", (c) => uploadHandler(c.req.raw));
-
-app.post("/checkout", async (c) => {
+app.post("/api/checkout", async (c) => {
   try {
     const body = await c.req.json();
     const { variantId, designUrl, title, amountAuth } = body;
@@ -148,7 +119,7 @@ app.post("/checkout", async (c) => {
   }
 });
 
-app.post("/webhooks/stripe", async (c) => {
+app.post("/api/webhooks/stripe", async (c) => {
   const signature = c.req.header("stripe-signature");
   const webhookSecret = getEnv("STRIPE_WEBHOOK_SECRET");
   if (!signature) return c.text("Bad Request", 400);
