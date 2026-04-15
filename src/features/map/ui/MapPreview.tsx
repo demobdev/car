@@ -266,8 +266,11 @@ export default function MapPreview({
   const normalizedOverzoomScale = Math.max(1, overzoomScale);
   const innerStyle: CSSProperties =
     normalizedOverzoomScale === 1
-      ? { width: "100%", height: "100%" }
+      ? { position: "absolute", inset: 0 }
       : {
+          position: "absolute",
+          top: 0,
+          left: 0,
           width: `${normalizedOverzoomScale * 100}%`,
           height: `${normalizedOverzoomScale * 100}%`,
           transform: `scale(${1 / normalizedOverzoomScale})`,
