@@ -149,19 +149,8 @@ export default function CheckoutDrawer({ onClose }: CheckoutDrawerProps) {
         clearInterval(checkProgress);
       });
 
-    // 2. BACKGROUND WARMING (Low Priority)
-    // We pre-render the other frame styles so switching is instant.
-    // Staggered by 3s to respect Printful's 120req/min rate limit.
-    const otherStyles: ("black" | "white" | "natural")[] = ["black", "white", "natural"];
-    otherStyles.filter(s => s !== frameStyle).forEach((style, index) => {
-      setTimeout(() => {
-        const vId = printProvider.getVariantForLayout(form.layout, { frameStyle: style });
-        if (vId && !printProvider.getCachedMockup(vId, designUrl)) {
-          console.log(`[Predictive] Pre-rendering ${style} in background...`);
-          printProvider.generateMockup(vId, designUrl).catch(() => {});
-        }
-      }, (index + 1) * 3000);
-    });
+    // BACKGROUND WARMING REMOVED TEMPORARILY:
+    // This was causing 429 Rate Limits on Printful by polling too frequently.
 
   }, [designUrl, form.layout, frameStyle]);
 

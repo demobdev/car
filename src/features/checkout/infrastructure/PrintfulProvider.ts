@@ -139,6 +139,8 @@ export class PrintfulProvider implements IPrintProvider {
     return this.mockupCache.get(cacheKey) || null;
   }
 
+  private inFlightMockups = new Map<string, Promise<string>>();
+
   async generateMockup(
     variantId: string,
     designUrl: string
@@ -152,8 +154,13 @@ export class PrintfulProvider implements IPrintProvider {
       return cachedLocal;
     }
 
-    // LAYER 2: Global Supabase Cache (Shared)
-    try {
+    if (this.inFlightMockups.has(cacheKey)) {
+      return this.inFlightMockups.get(cacheKey)!;
+    }
+
+    const generatorPromise = (async () => {
+      // LAYER 2: Global Supabase Cache (Shared)
+      try {
       const sbUrl = import.meta.env.VITE_SUPABASE_URL;
       const sbKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
       if (sbUrl && sbKey) {
@@ -244,9 +251,13 @@ export class PrintfulProvider implements IPrintProvider {
         if (task?.status === "failed") throw new Error("Mockup generation failed on Printful server");
       }
       throw new Error("Mockup generation timed out.");
-    } catch (error: any) {
-      console.error("Mockup Provider Error:", error.message);
-      throw error;
+    })();
+
+    this.inFlightMockups.set(cacheKey, generatorPromise);
+    try {
+      return await generatorPromise;
+    } finally {
+      this.inFlightMockups.delete(cacheKey);
     }
   }
 }
