@@ -1,5 +1,4 @@
 import type { IHttp } from "@/core/http/ports";
-import { PRINTFUL_API_TOKEN } from "@/core/config";
 import type { IPrintProvider, ShippingAddress, OrderCost, OrderResult } from "../domain/ports";
 import { getPrintfulVariant, getPrintfulProductId } from "./printfulCatalog";
 
@@ -28,7 +27,6 @@ export class PrintfulProvider implements IPrintProvider {
 
   private get headers() {
     return {
-      "Authorization": `Bearer ${PRINTFUL_API_TOKEN}`,
       "Content-Type": "application/json",
     };
   }

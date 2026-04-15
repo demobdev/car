@@ -1,0 +1,13 @@
+{
+  "functions": {
+    "src/server/server.ts": {
+      "runtime": "vercel-node@latest"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/src/server/server.ts"
+    }
+  ]
+}
