@@ -4,8 +4,19 @@ import { handle } from "hono/vercel";
 import Stripe from "stripe";
 
 // Helper for universal environment access (Bun vs Node/Vercel)
+// Updated to handle VITE_ prefix fallbacks automatically for production
 const getEnv = (key: string): string => {
-  return (globalThis as any).Bun?.env?.[key] || (globalThis as any).process?.env?.[key] || "";
+  const providers = [
+    (globalThis as any).Bun?.env,
+    (globalThis as any).process?.env
+  ];
+  
+  for (const env of providers) {
+    if (!env) continue;
+    if (env[key]) return env[key];
+    if (env[`VITE_${key}`]) return env[`VITE_${key}`];
+  }
+  return "";
 };
 
 const stripe = new Stripe(getEnv("STRIPE_SECRET_KEY"), {

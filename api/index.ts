@@ -2,7 +2,7 @@ import { handle } from "hono/vercel";
 import { app } from "../src/server/server";
 
 export const config = {
-  runtime: "edge", // Using edge for maximum performance on Vercel
+  runtime: "nodejs", // Standard Node.js for maximum library compatibility
 };
 
 export default handle(app);
