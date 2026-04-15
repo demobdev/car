@@ -206,13 +206,32 @@ export class PrintfulProvider implements IPrintProvider {
       ]
     };
 
-    try {
-      const response = await this.http.post(url, JSON.stringify(payload), { headers: this.headers });
-      const startResult = await response.json();
-      
-      if (!response.ok) {
-        throw new Error(startResult.detail || startResult.title || "Failed to start mockup task");
+    let response;
+    let startResult;
+    for (let attempts = 0; attempts < 3; attempts++) {
+      try {
+        response = await this.http.post(url, JSON.stringify(payload), { headers: this.headers });
+        startResult = await response.json();
+        
+        if (response.status === 429 || (startResult.code && startResult.code === 429)) {
+          console.warn(`[Printful] 429 Rate Limit hit. Retrying in 3s (Attempt ${attempts + 1})...`);
+          await new Promise(r => setTimeout(r, 3000));
+          continue;
+        }
+        
+        if (!response.ok) {
+          throw new Error(startResult.detail || startResult.title || "Failed to start mockup task");
+        }
+        break; // Success
+      } catch (e: any) {
+        if (attempts === 2) throw e;
+        await new Promise(r => setTimeout(r, 3000));
       }
+    }
+    
+    if (!response || !response.ok) {
+      throw new Error("Failed to start mockup task after retries.");
+    }
       
       const taskId = Array.isArray(startResult.data) ? startResult.data[0]?.id : startResult.data?.id;
 
