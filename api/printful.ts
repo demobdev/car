@@ -4,11 +4,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const token = process.env.PRINTFUL_API_TOKEN || process.env.VITE_PRINTFUL_API_TOKEN || "";
   if (!token) return res.status(500).json({ error: "Missing PRINTFUL_API_TOKEN" });
 
-  // Get everything after /api/printful/
   const { path } = req.query;
   const subPath = Array.isArray(path) ? path.join("/") : path || "";
+  
+  // Clean up qs, ensuring we don't duplicate query parameters
   const qs = new URL(req.url || "", `https://${req.headers.host}`).search;
-  const url = `https://api.printful.com/${subPath}${qs}`;
+  
+  // Construct upstream URL, avoiding double slashes just in case
+  const upstreamPath = subPath.startsWith('/') ? subPath : `/${subPath}`;
+  const url = `https://api.printful.com${upstreamPath}${qs}`;
 
   const opts: RequestInit = {
     method: req.method || "GET",
