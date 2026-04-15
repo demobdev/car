@@ -53,11 +53,11 @@
     display: flex;
     align-items: center;
     position: fixed;
-    bottom: calc(14px + env(safe-area-inset-bottom, 0px));
-    left: 16px;
-    right: 16px;
+    bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+    left: 12px;
+    right: 12px;
     z-index: 100;
-    gap: 8px;
+    gap: 6px;
   }
 
   html[data-display-mode="standalone"] .mobile-nav-wrapper {
@@ -69,8 +69,8 @@
     display: flex;
     flex: 1;
     min-width: 0;
-    height: 60px;
-    border-radius: 26px;
+    height: 52px;
+    border-radius: 20px;
     background: var(--overlay-bg);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -113,7 +113,7 @@
     top: 0;
     right: 0;
     bottom: 0;
-    width: 30px;
+    width: 25px;
     pointer-events: none;
     background: linear-gradient(
       to right,
@@ -121,16 +121,16 @@
       rgba(9, 16, 24, 0.62) 70%,
       rgba(9, 16, 24, 0.78) 100%
     );
-    border-radius: 0 20px 20px 0;
+    border-radius: 0 18px 18px 0;
   }
 
   .mobile-nav-fade::after {
     content: "";
     position: absolute;
     top: 50%;
-    right: 6px;
-    width: 6px;
-    height: 6px;
+    right: 5px;
+    width: 5px;
+    height: 5px;
     border-top: 1.5px solid rgba(180, 205, 225, 0.35);
     border-right: 1.5px solid rgba(180, 205, 225, 0.35);
     transform: translateY(-50%) rotate(45deg);
@@ -138,19 +138,19 @@
 
   .mobile-nav-tab {
     flex-shrink: 0;
-    width: 72px;
+    width: 66px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 3px;
     margin: 0;
-    padding: 6px 0;
+    padding: 4px 0;
     border: none;
-    border-radius: 20px;
+    border-radius: 18px;
     background: transparent;
     color: rgba(180, 205, 225, 0.45);
-    font-size: 0.58rem;
+    font-size: 0.54rem;
     font-weight: 600;
     font-family: "Spline Sans Mono", monospace;
     text-transform: uppercase;
@@ -174,8 +174,8 @@
   }
 
   .mobile-nav-icon {
-    width: 19px;
-    height: 19px;
+    width: 17px;
+    height: 17px;
   }
 
   .mobile-nav-label {
@@ -185,13 +185,13 @@
   /* Settings button — separate pill/circle to the right */
   .mobile-nav-settings {
     flex-shrink: 0;
-    width: 60px;
-    height: 60px;
+    width: 52px;
+    height: 52px;
     display: flex;
     align-items: center;
     justify-content: center;
     border: 1px solid rgba(146, 176, 200, 0.14);
-    border-radius: 20px;
+    border-radius: 18px;
     background: var(--overlay-bg);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -205,8 +205,8 @@
   }
 
   .mobile-nav-settings-icon {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
   }
 
   .startup-location-modal {
