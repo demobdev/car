@@ -130,12 +130,36 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-@media (max-width: 600px) {
-  .drafts-grid {
-    flex-direction: column;
-    align-items: stretch;
+@media (max-width: 768px) {
+  .recent-drafts {
+    max-width: 100vw;
   }
+  
+  .drafts-grid {
+    flex-direction: row;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    /* Bleed out of the parent's padding to touch edges, but preserve inner spacing */
+    margin: 0 -2rem;
+    padding: 0 2rem 1rem 2rem;
+    scrollbar-width: none;
+    justify-content: flex-start;
+  }
+
+  .drafts-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .community-card-container {
+    flex: 0 0 75%;
+    max-width: 260px;
+    scroll-snap-align: center;
+  }
+
   .draft-card {
-    max-width: none;
+    max-width: 100%;
+    width: 100%;
   }
 }
