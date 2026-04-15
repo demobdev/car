@@ -19,9 +19,7 @@ const getEnv = (key: string): string => {
   return "";
 };
 
-const stripe = new Stripe(getEnv("STRIPE_SECRET_KEY"), {
-  apiVersion: "2024-04-10",
-});
+// Stripe is lazily initialized via getStripe() to avoid crashing on startup
 
 import { logger } from "hono/logger";
 
@@ -87,7 +85,7 @@ let stripeInstance: Stripe | null = null;
 const getStripe = () => {
   const key = getEnv("STRIPE_SECRET_KEY");
   if (!stripeInstance) {
-    stripeInstance = new Stripe(key, { apiVersion: "2024-04-10" });
+    stripeInstance = new Stripe(key, { apiVersion: "2026-03-25.dahlia" as any });
   }
   return stripeInstance;
 };

@@ -41,16 +41,7 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      "/api/printful": {
-        target: "https://api.printful.com",
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api\/printful/, ""),
-      },
-      "/api/uploadthing": {
-        target: "http://localhost:3001",
-        changeOrigin: true,
-      },
-      "/api/checkout": {
+      "/api": {
         target: "http://localhost:3001",
         changeOrigin: true,
       },
