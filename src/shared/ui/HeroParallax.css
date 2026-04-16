@@ -1,0 +1,153 @@
+.hero-parallax-container {
+  /* Height is slightly larger than screen to allow scroll effect */
+  height: min(290vh, 3200px);
+  padding-top: 40px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(circle at 50% 30%, #152418 0%, #0b110c 70%);
+  perspective: 1000px;
+}
+
+@media (max-width: 768px) {
+  .hero-parallax-container {
+    height: 180vh;
+  }
+}
+
+.hero-parallax-header {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  text-align: center;
+  position: relative;
+  z-index: 10;
+  transform: translateZ(0); /* Force hardware accel */
+}
+
+.hero-parallax-header .hero-title {
+  font-size: clamp(3rem, 6vw, 5rem);
+  font-weight: 800;
+  line-height: 1.05;
+  margin: 0 0 1.5rem;
+  letter-spacing: -0.03em;
+  background: linear-gradient(180deg, #ffffff 0%, #a8d5b4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #fff;
+}
+
+.hero-parallax-header .hero-subtitle {
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  font-weight: 400;
+  color: #a3b8a8;
+  margin: 0 auto;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+}
+
+.hero-parallax-matrix {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  transform-style: preserve-3d;
+}
+
+.hero-parallax-row {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  white-space: nowrap;
+}
+
+.hero-parallax-card {
+  position: relative;
+  height: 24rem;
+  width: 20rem;
+  flex-shrink: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 40px -15px rgba(0,0,0,0.5);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.hero-parallax-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(168, 213, 180, 0.4);
+}
+
+.hero-parallax-card-inner {
+  height: 100%;
+  width: 100%;
+  pointer-events: none;
+}
+
+.hero-parallax-image {
+  object-fit: cover;
+  object-position: left top;
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.hero-parallax-placeholder {
+  position: absolute;
+  inset: 0;
+  background: rgba(168, 213, 180, 0.05);
+}
+
+.hero-parallax-overlay {
+  position: absolute;
+  inset: 0;
+  background: black;
+  opacity: 0.6;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.hero-parallax-card:hover .hero-parallax-overlay {
+  opacity: 0.1;
+}
+
+.hero-parallax-card-title {
+  position: absolute;
+  bottom: 2rem;
+  left: 1.5rem;
+  opacity: 0;
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 700;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  font-family: var(--font-family, 'Inter', sans-serif);
+}
+
+.hero-parallax-card-subtitle {
+  position: absolute;
+  bottom: 1rem;
+  left: 1.5rem;
+  opacity: 0;
+  color: #a8d5b4;
+  font-size: 0.875rem;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  font-family: var(--font-family, 'Inter', sans-serif);
+}
+
+.hero-parallax-card:hover .hero-parallax-card-title,
+.hero-parallax-card:hover .hero-parallax-card-subtitle {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .hero-parallax-card {
+    height: 16rem;
+    width: 14rem;
+  }
+}

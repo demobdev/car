@@ -4,6 +4,7 @@ import GeneralHeader from "./GeneralHeader";
 import { posterDraftRepository } from "@/core/services";
 import type { PosterDraft } from "@/features/poster/domain/ports";
 import InspirationGallery from "@/features/community/ui/InspirationGallery";
+import { HeroParallax } from "./HeroParallax";
 import { StarIcon, PlusIcon } from "@/shared/ui/Icons";
 import type { SupabaseDraftRepository } from "@/features/poster/infrastructure/SupabaseDraftRepository";
 
@@ -49,78 +50,25 @@ export default function Homepage({ onStart, onResume }: HomepageProps) {
     <div className="homepage">
       <GeneralHeader />
 
-      <main className="homepage-hero">
-        <h2 className="hero-title">Beautiful Custom Map Posters, Instantly.</h2>
-        <p className="hero-subtitle">
-          Design premium, print-ready maps of your favorite places in the world.
-          Whether it's your hometown, where you met, or your next adventure.
-        </p>
-        
-        <div className="hero-actions">
+      <main className="homepage-main-parallax">
+        <HeroParallax
+          products={drafts.slice(0, 15).map(draft => ({
+            title: draft.form.displayCity || "Untitled Map",
+            country: draft.form.displayCountry || "",
+            link: "#",
+            thumbnail: draft.imageUrl || "",
+            draftId: draft.id
+          }))}
+          onProductClick={(id) => {
+            const draft = drafts.find(d => d.id === id);
+            if (draft) onResume(draft);
+          }}
+        />
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '2rem' }}>
           <button className="hero-cta-button" onClick={() => onStart()}>
             Create Your Map
           </button>
         </div>
-
-        <section className="recent-drafts">
-          <div className="section-header-flex">
-            <h3 className="section-title">Studio Activity</h3>
-            <span className="live-indicator">LIVE FEED</span>
-          </div>
-          
-          {drafts.length > 0 ? (
-            <div className="drafts-grid">
-              {drafts.slice(0, 8).map((draft) => (
-                <div key={draft.id} className="community-card-container">
-                  <div className="draft-card community-style">
-                    {/* Visual Preview */}
-                    <div className="card-preview" onClick={() => onResume(draft)}>
-                      {draft.imageUrl ? (
-                        <img src={draft.imageUrl} alt={draft.form.displayCity} className="card-thumb" />
-                      ) : (
-                        <div className="thumb-placeholder">
-                          <PlusIcon />
-                        </div>
-                      )}
-                      
-                      {/* Glassmorphism Title Overlay */}
-                      <div className="card-overlay">
-                        <span className="draft-title">
-                          {draft.form.displayCity || "Untitled Map"}
-                        </span>
-                        <span className="draft-date">
-                          {draft.form.displayCountry || "World"}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Social Logic */}
-                    <div className="card-social">
-                      <div 
-                        className={`star-count-badge ${hasVoted[draft.id] ? 'is-active' : ''}`}
-                        onClick={(e) => handleStar(e, draft.id)}
-                      >
-                        <StarIcon />
-                        <span>{draft.stars || 0}</span>
-                      </div>
-                      <button className="remix-action" onClick={() => onResume(draft)}>
-                        <PlusIcon /> <span>Remix</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="empty-studio-state">
-              <div className="empty-icon"><PlusIcon /></div>
-              <p>The global studio is waiting for its next masterpiece.</p>
-              <button className="empty-state-cta" onClick={() => onStart()}>
-                Start a New Design
-              </button>
-            </div>
-          )}
-        </section>
       </main>
 
       <InspirationGallery />
