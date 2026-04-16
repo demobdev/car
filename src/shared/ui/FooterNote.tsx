@@ -48,6 +48,11 @@ export default function FooterNote({ onLicensesOpen, onAttributionOpen }: Footer
             )}
           </p>
         ) : null}
+        
+        {hasLegal && (onLicensesOpen || onAttributionOpen || repoUrl) ? (
+          <span className="source-note" style={{ margin: '0 4px' }}>|</span>
+        ) : null}
+
         <p className="source-note cartographica-compliance-links">
           {onLicensesOpen ? (
             <button
