@@ -113,7 +113,7 @@ export default function AttributionModal({ onClose }: AttributionModalProps) {
                 <td>Source Code</td>
                 <td>
                   <a
-                    href="https://github.com/mfranzreb/terraink"
+                    href="https://github.com/demobdev/car"
                     target="_blank"
                     rel="noreferrer"
                   >

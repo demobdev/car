@@ -24,7 +24,7 @@ export default function FooterNote({ onLicensesOpen, onAttributionOpen }: Footer
                 {contactEmail}
               </a>
             )}
-            {contactEmail && (legalNoticeUrl || privacyUrl) && " | "}
+            {contactEmail && (legalNoticeUrl || privacyUrl) && <span>{" | "}</span>}
             {legalNoticeUrl && (
               <a
                 className="source-link"
@@ -35,7 +35,7 @@ export default function FooterNote({ onLicensesOpen, onAttributionOpen }: Footer
                 Imprint
               </a>
             )}
-            {legalNoticeUrl && privacyUrl && " | "}
+            {legalNoticeUrl && privacyUrl && <span>{" | "}</span>}
             {privacyUrl && (
               <a
                 className="source-link"
@@ -58,7 +58,7 @@ export default function FooterNote({ onLicensesOpen, onAttributionOpen }: Footer
               Licenses
             </button>
           ) : null}
-          {onLicensesOpen && onAttributionOpen ? " | " : null}
+          {onLicensesOpen && onAttributionOpen ? <span>{" | "}</span> : null}
           {onAttributionOpen ? (
             <button
               type="button"
@@ -69,35 +69,24 @@ export default function FooterNote({ onLicensesOpen, onAttributionOpen }: Footer
             </button>
           ) : null}
           {repoUrl ? (
-            <>
-              {" | "}
-              <a
-                className="source-link"
-                href={repoUrl}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Source Code
-              </a>
-            </>
-          ) : null}
-        </p>
+              <>
+                <span>{" | "}</span>
+                <a
+                  className="source-link"
+                  href="https://github.com/demobdev/car"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Source Code
+                </a>
+              </>
+            ) : null}
+            <span>{" | "}</span>
+            <span className="cartographica-version">v{appVersion}</span>
+          </p>
       </div>
 
-      <div className="desktop-footer-middle">
-        <p className="made-note">
-          Cartographica v{appVersion} | Based on{" "}
-          <a
-            className="source-link"
-            href="https://github.com/mfranzreb/terraink"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Cartographica
-          </a>{" "}
-          open-source software
-        </p>
-      </div>
+
 
       <div className="desktop-footer-right">
         <p className="source-note">
@@ -129,7 +118,7 @@ export default function FooterNote({ onLicensesOpen, onAttributionOpen }: Footer
           >
             OpenMapTiles
           </a>
-          {" | "}Powered by{" "}
+          <span>{" | "}</span>Powered by{" "}
           <a
             className="source-link"
             href="https://openfreemap.org/"

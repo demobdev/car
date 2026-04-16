@@ -36,7 +36,7 @@ export default function LicensesModal({ onClose }: LicensesModalProps) {
             <p>
               Cartographica is based on the{" "}
               <a
-                href="https://github.com/mfranzreb/terraink"
+                href="https://github.com/demobdev/car"
                 target="_blank"
                 rel="noreferrer"
               >
